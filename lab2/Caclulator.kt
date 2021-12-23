@@ -237,7 +237,7 @@ fun calculator(expression: String): Double
     val expressionWithoutSpaces = withoutSpaces(expression)
     val elements:MutableList<Element> = createListOfElements(expressionWithoutSpaces)
     val elements2 :MutableList<Element> = fromInfixToPostfix(elements)
-    return 0.0
+    return result(elements2)
 }
 fun result(postfixElements:MutableList<Element>) : Double
 {
