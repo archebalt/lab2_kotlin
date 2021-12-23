@@ -239,3 +239,74 @@ fun calculator(expression: String): Double
     val elements2 :MutableList<Element> = fromInfixToPostfix(elements)
     return 0.0
 }
+fun result(postfixElements:MutableList<Element>) : Double
+{
+    val stack = emptyList<Double>().toMutableList()
+    for(i in 0 until postfixElements.size)
+    {
+        if(postfixElements[i].elemType == ElemType.NUMBER )
+        {
+            stack.add(postfixElements[i].element.toDouble())
+        }
+        else if(postfixElements[i].elemType == ElemType.PLUS)
+        {
+            stack.add(stack[stack.size - 1] + stack[stack.size - 2])
+            stack.removeAt(stack.size - 2)
+            stack.removeAt(stack.size - 2)
+        }
+        else if(postfixElements[i].elemType == ElemType.MINUS)
+        {
+            stack.add(stack[stack.size - 2] - stack[stack.size - 1])
+            stack.removeAt(stack.size - 2)
+            stack.removeAt(stack.size - 2)
+        }
+        else if(postfixElements[i].elemType == ElemType.MULTIPLY)
+        {
+            stack.add( stack[stack.size - 1] * stack[stack.size - 2])
+            stack.removeAt(stack.size - 2)
+            stack.removeAt(stack.size - 2)
+        }
+        else if(postfixElements[i].elemType == ElemType.DIVIDE)
+        {
+            stack.add(stack[stack.size - 2] / stack[stack.size - 1])
+            stack.removeAt(stack.size - 2)
+            stack.removeAt(stack.size - 2)
+        }
+        else if(postfixElements[i].elemType == ElemType.SIN)
+        {
+            stack.add( sin(stack[stack.size - 1]/180 * Math.PI))
+            stack.removeAt(stack.size - 2)
+        }
+        else if(postfixElements[i].elemType == ElemType.COS)
+        {
+            stack.add( cos(stack[stack.size - 1]/180 * Math.PI ) )
+            stack.removeAt(stack.size - 2)
+        }
+        else if(postfixElements[i].elemType == ElemType.TG)
+        {
+            stack.add( tan(stack[stack.size - 1]/180 * Math.PI))
+            stack.removeAt(stack.size - 2)
+        }
+        else if(postfixElements[i].elemType == ElemType.CTG)
+        {
+            stack.add( 1/tan(stack[stack.size - 1]/180 * Math.PI))
+            stack.removeAt(stack.size - 2)
+        }
+        else if(postfixElements[i].elemType == ElemType.PI)
+        {
+            stack.add(Math.PI)
+        }
+
+        else if(postfixElements[i].elemType == ElemType.E)
+        {
+            stack.add(Math.E)
+        }
+        else if(postfixElements[i].elemType == ElemType.DEGREE)
+        {
+            stack.add( stack[stack.size - 2].pow(stack[stack.size - 1]))
+            stack.removeAt(stack.size - 2)
+            stack.removeAt(stack.size - 2)
+        }
+    }
+    return stack[0]
+}
